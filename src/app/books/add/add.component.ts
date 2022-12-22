@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { setAPIStatus } from 'src/app/shared/store/app.action';
+import { selectAppState } from 'src/app/shared/store/app.selector';
+import { Appstate } from 'src/app/shared/store/appstate';
+import { Books } from '../store/books';
+import { invokeBooksAPI, invokeSaveNewBookAPI } from '../store/books.action';
 
 @Component({
   selector: 'app-add',
@@ -7,9 +14,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store, private appStore: Store<Appstate>, private router: Router) { }
+
+  bookForm: Books = {
+    id: 0,
+    author: '',
+    name: '',
+    cost: 0
+  }
 
   ngOnInit(): void {
+  }
+
+  saveBook(): void {
+    this.store.dispatch(invokeSaveNewBookAPI({ newBook: this.bookForm }));
+    let apiStatus$ = this.appStore.pipe(select(selectAppState));
+    apiStatus$.subscribe(appState => {
+      if (appState.apiStatus === 'success') {
+        this.appStore.dispatch(setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } }));
+        this.router.navigate(['/'])
+      }
+    })
   }
 
 }
