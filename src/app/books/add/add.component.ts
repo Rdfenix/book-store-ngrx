@@ -5,7 +5,7 @@ import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { Appstate } from 'src/app/shared/store/appstate';
 import { Books } from '../store/books';
-import { invokeBooksAPI, invokeSaveNewBookAPI } from '../store/books.action';
+import { invokeSaveNewBookAPI } from '../store/books.action';
 
 @Component({
   selector: 'app-add',
@@ -14,7 +14,7 @@ import { invokeBooksAPI, invokeSaveNewBookAPI } from '../store/books.action';
 })
 export class AddComponent implements OnInit {
 
-  constructor(private store: Store, private appStore: Store<Appstate>, private router: Router) { }
+  constructor(private store: Store<Books[]>, private appStore: Store<Appstate>, private router: Router) { }
 
   bookForm: Books = {
     id: 0,
@@ -29,6 +29,7 @@ export class AddComponent implements OnInit {
   saveBook(): void {
     this.store.dispatch(invokeSaveNewBookAPI({ newBook: this.bookForm }));
     let apiStatus$ = this.appStore.pipe(select(selectAppState));
+
     apiStatus$.subscribe(appState => {
       if (appState.apiStatus === 'success') {
         this.appStore.dispatch(setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } }));

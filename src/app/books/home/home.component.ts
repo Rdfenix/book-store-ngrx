@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { Books } from '../store/books';
 import { invokeBooksAPI } from '../store/books.action';
 import { selectBooks } from '../store/books.selector';
 
@@ -10,7 +11,7 @@ import { selectBooks } from '../store/books.selector';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private store: Store) { }
+  constructor(private store: Store<Books[]>) { }
 
   books$ = this.store.pipe(select(selectBooks))
 
