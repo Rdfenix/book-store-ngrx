@@ -17,4 +17,8 @@ export class BooksService {
   addBook(payload: Books): Observable<any> {
     return this.http.post<Books>('http://localhost:3004/books', payload)
   }
+
+  updateBook(payload: Books): Observable<any> {
+    return this.http.put<Books>(`http://localhost:3004/books/${payload.id}`, payload)
+  }
 }

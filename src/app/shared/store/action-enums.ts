@@ -4,4 +4,6 @@ export const actions = {
     API_SUCCESS_FAILURE: '[API] success or failure status',
     NEW_BOOK_API: '[Books API] Inovke save new book api',
     NEW_BOOK_API_SUCCESS: '[Books API] save new book api success',
+    UPDATE_BOOK_API: '[Books API] Inovke update book api',
+    UPDATE_BOOK_API_SUCCESS: '[Books API] update  book api success'
 }

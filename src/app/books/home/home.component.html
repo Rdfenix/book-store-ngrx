@@ -9,6 +9,11 @@
           <li class="list-group-item">{{ book.author }}</li>
           <li class="list-group-item">${{ book.cost }}</li>
         </ul>
+        <div class="card-footer">
+          <a [routerLink]="['/edit', book.id]" class="btn btn-dark"
+            >Edit Book</a
+          >
+        </div>
       </div>
     </div>
   </div>
